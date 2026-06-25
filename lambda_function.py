@@ -1,10 +1,9 @@
 import json
-
 tasks = []
 
 def lambda_handler(event, context):
-    path = event.get("rawPath")
-    method = event["requestContext"]["http"]["method"]
+    path = event.get("resource")
+    method = event.get("httpMethod")
 
     if path == "/health" and method == "GET":
         return {
