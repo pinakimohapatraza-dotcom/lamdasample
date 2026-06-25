@@ -3,10 +3,10 @@ import json
 tasks = []
 
 def lambda_handler(event, context):
-    path = event.get("resource")
-    method = event.get("httpMethod")
+    path = event.get("rawPath")
+    method = event["requestContext"]["http"]["method"]
 
-    if path == "/health":
+    if path == "/health" and method == "GET":
         return {
             "statusCode": 200,
             "body": json.dumps({"message": "API is healthy"})
@@ -29,5 +29,9 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 404,
-        "body": json.dumps({"message": "Not found"})
+        "body": json.dumps({
+            "path": path,
+            "method": method,
+            "message": "Not found"
+        })
     }
