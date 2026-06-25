@@ -2,6 +2,7 @@ import json
 tasks = []
 
 def lambda_handler(event, context):
+    print("called")
     path = event.get("resource")
     method = event.get("httpMethod")
 
